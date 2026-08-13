@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BookStore</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'Books/style.css' %}">
+</head>
+<body>
+
+    <h1>Welcome to BookStore!</h1>
+    <p>Your online bookstore.</p>
+
+    <h2>Add a Book</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="title" placeholder="Book title" required>
+        <input type="text" name="author" placeholder="Author" required>
+        <input type="number" name="price" step="0.01" placeholder="Price" required>
+
+        <button type="submit">Add Book</button>
+    </form>
+
+   {% for book in books %}
+    <div class="book">
+        <h2>{{ book.title }}</h2>
+        <p>Author: {{ book.author }}</p>
+        <p>Price: ₹{{ book.price }}</p>
+
+        <a href="{% url 'edit_book' book.id %}">Edit</a>
+        <a href="{% url 'delete_book' book.id %}">Delete</a>
+    </div>
+{% endfor %}
+
+</body>
+</html>
